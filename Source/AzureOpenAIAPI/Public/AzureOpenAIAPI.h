@@ -5,9 +5,9 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FOpenAIAPIModule : public IModuleInterface
+class FAzureOpenAIAPIModule : public IModuleInterface
 {
-	friend class UOpenAIUtils;
+	friend class UAzureOpenAIUtils;
 public:
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;

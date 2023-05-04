@@ -1,39 +1,39 @@
 ﻿// Copyright Kellan Mythen 2023. All rights Reserved.
 
 
-#include "OpenAICallDALLE.h"
-#include "OpenAIUtils.h"
+#include "AzureOpenAICallDALLE.h"
+#include "AzureOpenAIUtils.h"
 #include "Http.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
-#include "OpenAIParser.h"
+#include "AzureOpenAIParser.h"
 
 
-UOpenAICallDALLE::UOpenAICallDALLE()
+UAzureOpenAICallDALLE::UAzureOpenAICallDALLE()
 {
 }
 
-UOpenAICallDALLE::~UOpenAICallDALLE()
+UAzureOpenAICallDALLE::~UAzureOpenAICallDALLE()
 {
 }
 
-UOpenAICallDALLE* UOpenAICallDALLE::OpenAICallDALLE(EOAImageSize imageSizeInput, FString promptInput, int32 numImagesInput)
+UAzureOpenAICallDALLE* UAzureOpenAICallDALLE::AzureOpenAICallDALLE(EOAImageSize imageSizeInput, FString promptInput, int32 numImagesInput)
 {
-	UOpenAICallDALLE* BPNode = NewObject<UOpenAICallDALLE>();
+	UAzureOpenAICallDALLE* BPNode = NewObject<UAzureOpenAICallDALLE>();
 	BPNode->imageSize = imageSizeInput;
 	BPNode->prompt = promptInput;
 	BPNode->numImages = numImagesInput;
 	return BPNode;
 }
 
-void UOpenAICallDALLE::Activate()
+void UAzureOpenAICallDALLE::Activate()
 {
 	FString _apiKey;
-	if (UOpenAIUtils::getUseApiKeyFromEnvironmentVars())
-		_apiKey = UOpenAIUtils::GetEnvironmentVariable(TEXT("OPENAI_API_KEY"));
+	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
+		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_KEY"));
 	else
-		_apiKey = UOpenAIUtils::getApiKey();
+		_apiKey = UAzureOpenAIUtils::getApiKey();
 
 
 	// checking parameters are valid
@@ -69,7 +69,8 @@ void UOpenAICallDALLE::Activate()
 	tempHeader += _apiKey;
 
 	// set headers
-	FString url = FString::Printf(TEXT("https://api.openai.com/v1/images/generations"));
+	// original FString url = FString::Printf(TEXT("https://api.openai.com/v1/images/generations"));
+	FString url = FString::Printf(TEXT("https://jushimod-openai-sandbox.openai.azure.com/openai/deployments/jushimodChatGPT/chat/completions?api-version=2023-03-15-preview"));
 	HttpRequest->SetURL(url);
 	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	HttpRequest->SetHeader(TEXT("Authorization"), tempHeader);
@@ -91,7 +92,7 @@ void UOpenAICallDALLE::Activate()
 
 	if (HttpRequest->ProcessRequest())
 	{
-		HttpRequest->OnProcessRequestComplete().BindUObject(this, &UOpenAICallDALLE::OnResponse);
+		HttpRequest->OnProcessRequestComplete().BindUObject(this, &UAzureOpenAICallDALLE::OnResponse);
 	}
 	else
 	{
@@ -99,7 +100,7 @@ void UOpenAICallDALLE::Activate()
 	}
 }
 
-void UOpenAICallDALLE::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
+void UAzureOpenAICallDALLE::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
 {
 	if (!WasSuccessful)
 	{
@@ -125,7 +126,7 @@ void UOpenAICallDALLE::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Resp
 			return;
 		}
 
-		OpenAIParser parser(settings);
+		AzureOpenAIParser parser(settings);
 		TArray<FString> _out;
 
 		auto GeneratedImagesObject = responseObject->GetArrayField(TEXT("data"));

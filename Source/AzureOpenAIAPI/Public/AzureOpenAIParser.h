@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Misc/DateTime.h"
-#include "OpenAIDefinitions.h"
+#include "AzureOpenAIDefinitions.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
@@ -12,13 +12,13 @@
 /**
  * 
  */
-class OPENAIAPI_API OpenAIParser
+class AZUREOPENAIAPI_API AzureOpenAIParser
 {
 public:
-	OpenAIParser();
-	OpenAIParser(const FCompletionSettings&);
-	OpenAIParser(const FChatSettings&);
-	~OpenAIParser();
+	AzureOpenAIParser();
+	AzureOpenAIParser(const FCompletionSettings&);
+	AzureOpenAIParser(const FChatSettings&);
+	~AzureOpenAIParser();
 
 	FCompletionSettings completionSettings;
 	

@@ -1,7 +1,7 @@
 // Copyright Kellan Mythen 2023. All rights Reserved.
 
-#include "OpenAICallTranscriptions.h"
-#include "OpenAIUtils.h"
+#include "AzureOpenAICallTranscriptions.h"
+#include "AzureOpenAIUtils.h"
 #include "Http.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
@@ -11,28 +11,28 @@
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
 
-UOpenAICallTranscriptions::UOpenAICallTranscriptions()
+UAzureOpenAICallTranscriptions::UAzureOpenAICallTranscriptions()
 {
 }
 
-UOpenAICallTranscriptions::~UOpenAICallTranscriptions()
+UAzureOpenAICallTranscriptions::~UAzureOpenAICallTranscriptions()
 {
 }
 
-UOpenAICallTranscriptions* UOpenAICallTranscriptions::OpenAICallTranscriptions(FString fileName)
+UAzureOpenAICallTranscriptions* UAzureOpenAICallTranscriptions::AzureOpenAICallTranscriptions(FString fileName)
 {
-	UOpenAICallTranscriptions* BPNode = NewObject<UOpenAICallTranscriptions>();
+	UAzureOpenAICallTranscriptions* BPNode = NewObject<UAzureOpenAICallTranscriptions>();
 	BPNode->fileName = fileName + ".wav";
 	return BPNode;
 }
 
-void UOpenAICallTranscriptions::Activate()
+void UAzureOpenAICallTranscriptions::Activate()
 {
 	FString _apiKey;
-	if (UOpenAIUtils::getUseApiKeyFromEnvironmentVars())
-		_apiKey = UOpenAIUtils::GetEnvironmentVariable(TEXT("OPENAI_API_KEY"));
+	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
+		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_KEY"));
 	else
-		_apiKey = UOpenAIUtils::getApiKey();
+		_apiKey = UAzureOpenAIUtils::getApiKey();
 	
 	// checking parameters are valid
 	if (_apiKey.IsEmpty())
@@ -83,12 +83,12 @@ void UOpenAICallTranscriptions::Activate()
 
 	HttpRequest->SetContent(data); 
 
-	HttpRequest->OnProcessRequestComplete().BindUObject(this, &UOpenAICallTranscriptions::OnResponse);
+	HttpRequest->OnProcessRequestComplete().BindUObject(this, &UAzureOpenAICallTranscriptions::OnResponse);
 	
 	HttpRequest->ProcessRequest();
 }
 
-void UOpenAICallTranscriptions::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
+void UAzureOpenAICallTranscriptions::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
 {
 	if (!WasSuccessful)
 	{

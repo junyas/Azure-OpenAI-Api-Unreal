@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
-#include "OpenAIDefinitions.h"
+#include "AzureOpenAIDefinitions.h"
 #include "HttpModule.h"
-#include "OpenAICallCompletions.generated.h"
+#include "AzureOpenAICallCompletions.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnGptResponseRecievedPin, const TArray<FCompletion>&, completions, const FString&, errorMessage, const FCompletionInfo&, completionInfo, bool, Success);
 
@@ -14,26 +14,26 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnGptResponseRecievedPin, const T
  * 
  */
 UCLASS()
-class OPENAIAPI_API UOpenAICallCompletions : public UBlueprintAsyncActionBase
+class AZUREOPENAIAPI_API UAzureOpenAICallCompletions : public UBlueprintAsyncActionBase
 {
 	GENERATED_BODY()
 
 public:
-	UOpenAICallCompletions();
-	~UOpenAICallCompletions();
+	UAzureOpenAICallCompletions();
+	~UAzureOpenAICallCompletions();
 
 	EOACompletionsEngineType engine = EOACompletionsEngineType::TEXT_DAVINCI_002;
 	FString prompt = "";
 	FCompletionSettings settings;
 
-	UPROPERTY(BlueprintAssignable, Category = "OpenAI")
+	UPROPERTY(BlueprintAssignable, Category = "AzureOpenAI")
 		FOnGptResponseRecievedPin Finished;
 
 private:
-	OpenAIValueMapping mapping;
+	AzureOpenAIValueMapping mapping;
 
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "OpenAI")
-		static UOpenAICallCompletions* OpenAICallCompletions(EOACompletionsEngineType engine, FString prompt, FCompletionSettings settings);
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "AzureOpenAI")
+		static UAzureOpenAICallCompletions* AzureOpenAICallCompletions(EOACompletionsEngineType engine, FString prompt, FCompletionSettings settings);
 
 	virtual void Activate() override;
 	void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful);

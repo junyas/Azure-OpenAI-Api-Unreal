@@ -1,15 +1,15 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "OpenAIAPI.h"
+#include "AzureOpenAIAPI.h"
 
-#define LOCTEXT_NAMESPACE "FOpenAIAPIModule"
+#define LOCTEXT_NAMESPACE "FAzureOpenAIAPIModule"
 
-void FOpenAIAPIModule::StartupModule()
+void FAzureOpenAIAPIModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 
-void FOpenAIAPIModule::ShutdownModule()
+void FAzureOpenAIAPIModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
@@ -17,4 +17,4 @@ void FOpenAIAPIModule::ShutdownModule()
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FOpenAIAPIModule, OpenAIAPI)
+IMPLEMENT_MODULE(FAzureOpenAIAPIModule, AzureOpenAIAPI)

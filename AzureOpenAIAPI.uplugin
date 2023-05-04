@@ -2,12 +2,12 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "OpenAIAPI",
-	"Description": "Provides easy access to OpenAI's API",
+	"FriendlyName": "AzureOpenAIAPI",
+	"Description": "Provides easy access to Azure OpenAI's API that forked from https://github.com/KellanM/OpenAI-Api-Unreal",
 	"Category": "Other",
-	"CreatedBy": "Kellan Mythen",
+	"CreatedBy": "Jun Shimoda",
 	"CreatedByURL": "",
-	"DocsURL": "https://github.com/KellanM/OpenAI-Api-Unreal/",
+	"DocsURL": "https://github.com/junyas/Azure-OpenAI-Api-Unreal/",
 	"MarketplaceURL": "",
 	"SupportURL": "",
 	"EngineVersion": "4.26",
@@ -15,7 +15,7 @@
 	"Installed": true,
 	"Modules": [
 		{
-			"Name": "OpenAIAPI",
+			"Name": "AzureOpenAIAPI",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"WhitelistPlatforms": [

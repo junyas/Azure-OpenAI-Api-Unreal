@@ -1,8 +1,8 @@
 // Copyright 2021 Kellan Mythen. All Rights Reserved.
 
-#include "OpenAIDefinitions.h"
+#include "AzureOpenAIDefinitions.h"
 
-OpenAIValueMapping::OpenAIValueMapping()
+AzureOpenAIValueMapping::AzureOpenAIValueMapping()
 {
 	engineTypes.Add(EOACompletionsEngineType::DAVINCI, TEXT("DAVINCI"));
 	engineTypes.Add(EOACompletionsEngineType::CURIE, TEXT("CURIE"));

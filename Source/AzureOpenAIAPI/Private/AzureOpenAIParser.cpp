@@ -1,28 +1,28 @@
 // Copyright Kellan Mythen 2023. All rights Reserved.
 
-#include "OpenAIParser.h"
-#include "OpenAIUtils.h"
+#include "AzureOpenAIParser.h"
+#include "AzureOpenAIUtils.h"
 #include "Dom/JsonObject.h"
 
 
 // Constructor
-OpenAIParser::OpenAIParser(const FCompletionSettings& settings)
+AzureOpenAIParser::AzureOpenAIParser(const FCompletionSettings& settings)
 	: completionSettings(settings)
 {
 }
 
-OpenAIParser::OpenAIParser(const FChatSettings& settings)
+AzureOpenAIParser::AzureOpenAIParser(const FChatSettings& settings)
 	: chatSettings(settings)
 {
 }
 
 //De-constructor
-OpenAIParser::~OpenAIParser()
+AzureOpenAIParser::~AzureOpenAIParser()
 {
 }
 
 // parses a single Completion.
-FCompletion OpenAIParser::ParseCompletionsResponse(const FJsonObject& json)
+FCompletion AzureOpenAIParser::ParseCompletionsResponse(const FJsonObject& json)
 {
 	FCompletion res = {};
 	
@@ -34,7 +34,7 @@ FCompletion OpenAIParser::ParseCompletionsResponse(const FJsonObject& json)
 }
 
 // parses the response info
-FCompletionInfo OpenAIParser::ParseGPTCompletionInfo(const FJsonObject& json)
+FCompletionInfo AzureOpenAIParser::ParseGPTCompletionInfo(const FJsonObject& json)
 {
 	FCompletionInfo res = {};
 
@@ -47,7 +47,7 @@ FCompletionInfo OpenAIParser::ParseGPTCompletionInfo(const FJsonObject& json)
 }
 
 // parses a single Generated messasge.
-FChatCompletion OpenAIParser::ParseChatCompletion(const FJsonObject& json)
+FChatCompletion AzureOpenAIParser::ParseChatCompletion(const FJsonObject& json)
 {
 	FChatCompletion res = {};
 
@@ -64,13 +64,13 @@ FChatCompletion OpenAIParser::ParseChatCompletion(const FJsonObject& json)
 	return res;
 }
 
-FString OpenAIParser::ParseTranscriptionCompletion(const FJsonObject& json)
+FString AzureOpenAIParser::ParseTranscriptionCompletion(const FJsonObject& json)
 {
 	return json.GetStringField("text");
 }
 
 // parses a single Generated Image.
-FString OpenAIParser::ParseGeneratedImage(FJsonObject& json)
+FString AzureOpenAIParser::ParseGeneratedImage(FJsonObject& json)
 {
 	FString res = "";
 	res = json.GetStringField(TEXT("url"));

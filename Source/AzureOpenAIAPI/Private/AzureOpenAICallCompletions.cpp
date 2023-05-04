@@ -1,39 +1,39 @@
 // Copyright Kellan Mythen 2023. All rights Reserved.
 
 
-#include "OpenAICallCompletions.h"
-#include "OpenAIUtils.h"
+#include "AzureOpenAICallCompletions.h"
+#include "AzureOpenAIUtils.h"
 #include "Http.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
-#include "OpenAIParser.h"
+#include "AzureOpenAIParser.h"
 
 
-UOpenAICallCompletions::UOpenAICallCompletions()
+UAzureOpenAICallCompletions::UAzureOpenAICallCompletions()
 {
 }
 
-UOpenAICallCompletions::~UOpenAICallCompletions()
+UAzureOpenAICallCompletions::~UAzureOpenAICallCompletions()
 {
 }
 
-UOpenAICallCompletions* UOpenAICallCompletions::OpenAICallCompletions(EOACompletionsEngineType engineInput, FString promptInput, FCompletionSettings settingsInput)
+UAzureOpenAICallCompletions* UAzureOpenAICallCompletions::AzureOpenAICallCompletions(EOACompletionsEngineType engineInput, FString promptInput, FCompletionSettings settingsInput)
 {
-	UOpenAICallCompletions* BPNode = NewObject<UOpenAICallCompletions>();
+	UAzureOpenAICallCompletions* BPNode = NewObject<UAzureOpenAICallCompletions>();
 	BPNode->engine = engineInput;
 	BPNode->prompt = promptInput;
 	BPNode->settings = settingsInput;
 	return BPNode;
 }
 
-void UOpenAICallCompletions::Activate()
+void UAzureOpenAICallCompletions::Activate()
 {
 	FString _apiKey;
-	if (UOpenAIUtils::getUseApiKeyFromEnvironmentVars())
-		_apiKey = UOpenAIUtils::GetEnvironmentVariable(TEXT("OPENAI_API_KEY"));
+	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
+		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_KEY"));
 	else
-		_apiKey = UOpenAIUtils::getApiKey();
+		_apiKey = UAzureOpenAIUtils::getApiKey();
 
 
 	// checking parameters are valid
@@ -97,7 +97,8 @@ void UOpenAICallCompletions::Activate()
 	tempHeader += _apiKey;
 
 	// set headers
-	FString url = FString::Printf(TEXT("https://api.openai.com/v1/engines/%s/completions"), *apiMethod);
+	// original FString url = FString::Printf(TEXT("https://api.openai.com/v1/engines/%s/completions"), *apiMethod);
+	FString url = FString::Printf(TEXT("https://jushimod-openai-sandbox.openai.azure.com/openai/deployments/jushimodChatGPT/chat/completions?api-version=2023-03-15-preview"), *apiMethod);
 	HttpRequest->SetURL(url);
 	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	HttpRequest->SetHeader(TEXT("Authorization"), tempHeader);
@@ -139,7 +140,7 @@ void UOpenAICallCompletions::Activate()
 
 	if (HttpRequest->ProcessRequest())
 	{
-		HttpRequest->OnProcessRequestComplete().BindUObject(this, &UOpenAICallCompletions::OnResponse);
+		HttpRequest->OnProcessRequestComplete().BindUObject(this, &UAzureOpenAICallCompletions::OnResponse);
 	}
 	else
 	{
@@ -147,7 +148,7 @@ void UOpenAICallCompletions::Activate()
 	}
 }
 
-void UOpenAICallCompletions::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
+void UAzureOpenAICallCompletions::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
 {
 	if (!WasSuccessful)
 	{
@@ -174,7 +175,7 @@ void UOpenAICallCompletions::OnResponse(FHttpRequestPtr Request, FHttpResponsePt
 			return;
 		}
 
-		OpenAIParser parser(settings);
+		AzureOpenAIParser parser(settings);
 		TArray<FCompletion> _out;
 		FCompletionInfo _info = parser.ParseGPTCompletionInfo(*responseObject);
 

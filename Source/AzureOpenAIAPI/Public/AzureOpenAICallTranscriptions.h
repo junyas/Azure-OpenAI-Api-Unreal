@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 #include "HttpModule.h"
-#include "OpenAICallTranscriptions.generated.h"
+#include "AzureOpenAICallTranscriptions.generated.h"
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnTranscriptionResponseRecievedPin, const FString, Transcription, const FString&, errorMessage, bool, Success);
@@ -13,24 +13,24 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnTranscriptionResponseRecievedP
  * 
  */
 UCLASS()
-class OPENAIAPI_API UOpenAICallTranscriptions : public UBlueprintAsyncActionBase
+class AZUREOPENAIAPI_API UAzureOpenAICallTranscriptions : public UBlueprintAsyncActionBase
 {
 
 	GENERATED_BODY()
 
 public:
-	UOpenAICallTranscriptions();
-	~UOpenAICallTranscriptions();
+	UAzureOpenAICallTranscriptions();
+	~UAzureOpenAICallTranscriptions();
 
 	FString fileName;
 	
-	UPROPERTY(BlueprintAssignable, Category = "OpenAI")
+	UPROPERTY(BlueprintAssignable, Category = "AzureOpenAI")
 	FOnTranscriptionResponseRecievedPin Finished;
 
 private:
 	
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "OpenAI")
-		static UOpenAICallTranscriptions* OpenAICallTranscriptions(FString fileName);
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "AzureOpenAI")
+		static UAzureOpenAICallTranscriptions* AzureOpenAICallTranscriptions(FString fileName);
 
 	virtual void Activate() override;
 	void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful);

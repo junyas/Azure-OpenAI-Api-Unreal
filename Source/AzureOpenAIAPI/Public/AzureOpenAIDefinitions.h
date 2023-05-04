@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Misc/DateTime.h"
-#include "OpenAIDefinitions.generated.h"
+#include "AzureOpenAIDefinitions.generated.h"
 
 
 UENUM(BlueprintType)
@@ -51,10 +51,10 @@ USTRUCT(BlueprintType)
 struct FChatLog
 {
 	GENERATED_USTRUCT_BODY()
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	EOAChatRole role = EOAChatRole::SYSTEM;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	FString content = "";
 };
 
@@ -63,16 +63,16 @@ struct FCompletionInfo
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 			FString id = "Null";
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 			FString object = "Null";
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 			FDateTime created;
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 			FString model = "Null";
 
 };
@@ -82,15 +82,15 @@ struct FCompletion
 {
 	GENERATED_USTRUCT_BODY()
 
-	// OpenAI's response.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	// Azure OpenAI's response.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		FString text = "";
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		int32 index = 0;
 	
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		FString finishReason = "";
 };
 
@@ -99,19 +99,19 @@ struct FChatCompletion
 {
 	GENERATED_USTRUCT_BODY()
 
-	// OpenAI's response.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	// Azure OpenAI's response.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	FChatLog message;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	FString finishReason = "";
 };
 
 
-class OpenAIValueMapping
+class AzureOpenAIValueMapping
 {
 public:
-	OpenAIValueMapping();
+	AzureOpenAIValueMapping();
 	
 	TMap<EOACompletionsEngineType, FString> engineTypes;
 	TMap<EOAImageSize, FString> imageSizes;
@@ -123,51 +123,51 @@ struct FCompletionSettings
 	GENERATED_BODY()
 
 	/** A sequence that is appended to the start of your prompt */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		FString startSequence = "";
 
 	/** A sequence that is appended at the beginning of your prompt */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		FString injectStartText = "";
 
 	/** A sequence that is appended to the start of your prompt */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		FString injectRestartText = "";
 
 	/** Up to four sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		TArray<FString> stopSequences;
 
 	/** The maximum number of tokens to generate. Requests can use up to 2048 tokens shared between prompt and completion. (One token is roughly 4 characters for normal English text) */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		int32 maxTokens = 250;
 
 	/** What sampling temperature to use. Higher values means the model will take more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a well-defined answer. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		float temperature = 0.7f;
 
 	/** An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.  */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		float topP = 1.0f;
 
 	/** If logProbs is greater than 0, the model returns tokens, token_logprobs, and the text_offsets for a given completion. (support for top_logprobs will be added soon)*/
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		int32 logprobs = 0;
 
 	/** How many completions to generate for each prompt. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		int32 numCompletions = 1;
 
 	/** Number between 0 and 1 that penalizes new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		float frequencyPenalty = 0.0f;
 
 	/** Number between 0 and 1 that penalizes new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics. */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		float presencePenalty = 0.0f;
 
 	/** Generates best_of completions server-side and returns the "best" (the one with the lowest log probability per token). */
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 		int32 bestOf = 1;
 
 };
@@ -177,15 +177,15 @@ struct FChatSettings
 {
 	GENERATED_USTRUCT_BODY();
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	EOAChatEngineType model = EOAChatEngineType::GPT_4;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	TArray<FChatLog> messages;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	float temperature = 1.0f;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "OpenAI")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	int32 maxTokens = 250;
 };

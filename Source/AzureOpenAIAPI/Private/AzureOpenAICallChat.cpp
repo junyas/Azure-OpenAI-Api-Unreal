@@ -1,35 +1,35 @@
 // Copyright Kellan Mythen 2023. All rights Reserved.
 
-#include "OpenAICallChat.h"
-#include "OpenAIUtils.h"
+#include "AzureOpenAICallChat.h"
+#include "AzureOpenAIUtils.h"
 #include "Http.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
-#include "OpenAIParser.h"
+#include "AzureOpenAIParser.h"
 
-UOpenAICallChat::UOpenAICallChat()
+UAzureOpenAICallChat::UAzureOpenAICallChat()
 {
 }
 
-UOpenAICallChat::~UOpenAICallChat()
+UAzureOpenAICallChat::~UAzureOpenAICallChat()
 {
 }
 
-UOpenAICallChat* UOpenAICallChat::OpenAICallChat(FChatSettings chatSettingsInput)
+UAzureOpenAICallChat* UAzureOpenAICallChat::AzureOpenAICallChat(FChatSettings chatSettingsInput)
 {
-	UOpenAICallChat* BPNode = NewObject<UOpenAICallChat>();
+	UOpenAICallChat* BPNode = NewObject<UAzureOpenAICallChat>();
 	BPNode->chatSettings = chatSettingsInput;
 	return BPNode;
 }
 
-void UOpenAICallChat::Activate()
+void UAzureOpenAICallChat::Activate()
 {
 	FString _apiKey;
-	if (UOpenAIUtils::getUseApiKeyFromEnvironmentVars())
-		_apiKey = UOpenAIUtils::GetEnvironmentVariable(TEXT("OPENAI_API_KEY"));
+	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
+		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_KEY"));
 	else
-		_apiKey = UOpenAIUtils::getApiKey();
+		_apiKey = UAzureOpenAIUtils::getApiKey();
 	
 	// checking parameters are valid
 	if (_apiKey.IsEmpty())
@@ -61,7 +61,9 @@ void UOpenAICallChat::Activate()
 		tempHeader += _apiKey;
 
 		// set headers
-		FString url = FString::Printf(TEXT("https://api.openai.com/v1/chat/completions"));
+		// original FString url = FString::Printf(TEXT("https://api.openai.com/v1/chat/completions"));
+		FString url = FString::Printf(TEXT("https://jushimod-openai-sandbox.openai.azure.com/openai/deployments/jushimodChatGPT/chat/completions?api-version=2023-03-15-preview"));
+		
 		HttpRequest->SetURL(url);
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 		HttpRequest->SetHeader(TEXT("Authorization"), tempHeader);
@@ -110,7 +112,7 @@ void UOpenAICallChat::Activate()
 
 		if (HttpRequest->ProcessRequest())
 		{
-			HttpRequest->OnProcessRequestComplete().BindUObject(this, &UOpenAICallChat::OnResponse);
+			HttpRequest->OnProcessRequestComplete().BindUObject(this, &UAzureOpenAICallChat::OnResponse);
 		}
 		else
 		{
@@ -119,7 +121,7 @@ void UOpenAICallChat::Activate()
 	}
 }
 
-void UOpenAICallChat::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
+void UAzureOpenAICallChat::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful)
 {
 	// print response as debug message
 	if (!WasSuccessful)
@@ -146,7 +148,7 @@ void UOpenAICallChat::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Respo
 			return;
 		}
 
-		OpenAIParser parser(chatSettings);
+		AzureOpenAIParser parser(chatSettings);
 		FChatCompletion _out = parser.ParseChatCompletion(*responseObject);
 
 		Finished.Broadcast(_out, "", true);

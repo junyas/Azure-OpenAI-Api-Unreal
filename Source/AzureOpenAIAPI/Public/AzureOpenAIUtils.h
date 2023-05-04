@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "OpenAIDefinitions.h"
+#include "AzureOpenAIDefinitions.h"
 
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
@@ -22,25 +22,25 @@
 #include "Runtime/Core/Public/Linux/LinuxPlatformMisc.h"
 #endif
 
-#include "OpenAIUtils.generated.h"
+#include "AzureOpenAIUtils.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class OPENAIAPI_API UOpenAIUtils : public UBlueprintFunctionLibrary
+class AZUREOPENAIAPI_API UAzureOpenAIUtils : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "OpenAI")
-	static void setOpenAIApiKey(FString apiKey);
+	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
+	static void setAzureOpenAIApiKey(FString apiKey);
 	
 	static FString getApiKey();
 
-	UFUNCTION(BlueprintCallable, Category = "OpenAI")
-	static void setUseOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable);
+	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
+	static void setUseAzureOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable);
 
 	static bool getUseApiKeyFromEnvironmentVars();
 

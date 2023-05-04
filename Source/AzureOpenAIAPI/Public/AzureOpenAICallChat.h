@@ -4,33 +4,33 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
-#include "OpenAIDefinitions.h"
+#include "AzureOpenAIDefinitions.h"
 #include "HttpModule.h"
-#include "OpenAICallChat.generated.h"
+#include "AzureOpenAICallChat.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnResponseRecievedPin, const FChatCompletion, message, const FString&, errorMessage, bool, Success);
 /**
  * 
  */
 UCLASS()
-class OPENAIAPI_API UOpenAICallChat : public UBlueprintAsyncActionBase
+class AZUREOPENAIAPI_API UAzureOpenAICallChat : public UBlueprintAsyncActionBase
 {
 public:
 	GENERATED_BODY()
 
 public:
-	UOpenAICallChat();
-	~UOpenAICallChat();
+	UAzureOpenAICallChat();
+	~UAzureOpenAICallChat();
 
 	FChatSettings chatSettings;
 
-	UPROPERTY(BlueprintAssignable, Category = "OpenAI")
+	UPROPERTY(BlueprintAssignable, Category = "AzureOpenAI")
 	FOnResponseRecievedPin Finished;
 
 private:
 
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "OpenAI")
-		static UOpenAICallChat* OpenAICallChat(FChatSettings chatSettings);
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "AzureOpenAI")
+		static UAzureOpenAICallChat* AzureOpenAICallChat(FChatSettings chatSettings);
 
 	virtual void Activate() override;
 	void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful);

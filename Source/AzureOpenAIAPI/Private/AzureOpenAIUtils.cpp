@@ -1,37 +1,37 @@
 // Copyright Kellan Mythen 2023. All rights Reserved.
 
 
-#include "OpenAIUtils.h"
-#include "OpenAIDefinitions.h"
-#include "OpenAIAPI.h"
+#include "AzureOpenAIUtils.h"
+#include "AzureOpenAIDefinitions.h"
+#include "AzureOpenAIAPI.h"
 #include "Modules/ModuleManager.h"
 
-void UOpenAIUtils::setOpenAIApiKey(FString apiKey)
+void UAzureOpenAIUtils::setAzureOpenAIApiKey(FString apiKey)
 {
-	FOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FOpenAIAPIModule>("OpenAIAPI");
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
 	mod._apiKey = apiKey;
 }
 
-FString UOpenAIUtils::getApiKey()
+FString UAzureOpenAIUtils::getApiKey()
 {
-	FOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FOpenAIAPIModule>("OpenAIAPI");
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
 	return mod._apiKey;
 }
 
-void UOpenAIUtils::	setUseOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable)
+void UAzureOpenAIUtils::	setUseAzureOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable)
 {
-	FOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FOpenAIAPIModule>("OpenAIAPI");
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
 	mod._useApiKeyFromEnvVariable = bUseEnvVariable;
 }
 
-bool UOpenAIUtils::getUseApiKeyFromEnvironmentVars()
+bool UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars()
 {
 
-	FOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FOpenAIAPIModule>("OpenAIAPI");
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
 	return mod._useApiKeyFromEnvVariable;
 }
 
-FString UOpenAIUtils::GetEnvironmentVariable(FString key)
+FString UAzureOpenAIUtils::GetEnvironmentVariable(FString key)
 {
 	FString result;
 #if PLATFORM_WINDOWS
