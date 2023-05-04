@@ -18,7 +18,7 @@ UAzureOpenAICallChat::~UAzureOpenAICallChat()
 
 UAzureOpenAICallChat* UAzureOpenAICallChat::AzureOpenAICallChat(FChatSettings chatSettingsInput)
 {
-	UOpenAICallChat* BPNode = NewObject<UAzureOpenAICallChat>();
+	UAzureOpenAICallChat* BPNode = NewObject<UAzureOpenAICallChat>();
 	BPNode->chatSettings = chatSettingsInput;
 	return BPNode;
 }
