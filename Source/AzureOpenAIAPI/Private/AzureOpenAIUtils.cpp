@@ -6,6 +6,30 @@
 #include "AzureOpenAIAPI.h"
 #include "Modules/ModuleManager.h"
 
+void UAzureOpenAIUtils::setAzureOpenAIApiEndpoint(FString apiEndpoint)
+{
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
+	mod._apiEndpoint = apiEndpoint;
+}
+
+FString UAzureOpenAIUtils::getApiEndpoint()
+{
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
+	return mod._apiEndpoint;
+}
+
+void UAzureOpenAIUtils::setAzureOpenAIApiVersion(FString apiVersion)
+{
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
+	mod._apiVersion = apiVersion;
+}
+
+FString UAzureOpenAIUtils::getApiVersion()
+{
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
+	return mod._apiVersion;
+}
+
 void UAzureOpenAIUtils::setAzureOpenAIApiKey(FString apiKey)
 {
 	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
@@ -18,7 +42,7 @@ FString UAzureOpenAIUtils::getApiKey()
 	return mod._apiKey;
 }
 
-void UAzureOpenAIUtils::	setUseAzureOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable)
+void UAzureOpenAIUtils::setUseAzureOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable)
 {
 	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
 	mod._useApiKeyFromEnvVariable = bUseEnvVariable;

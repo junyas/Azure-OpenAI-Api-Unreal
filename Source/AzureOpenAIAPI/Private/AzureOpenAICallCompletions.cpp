@@ -18,7 +18,7 @@ UAzureOpenAICallCompletions::~UAzureOpenAICallCompletions()
 {
 }
 
-UAzureOpenAICallCompletions* UAzureOpenAICallCompletions::AzureOpenAICallCompletions(EOACompletionsEngineType engineInput, FString promptInput, FCompletionSettings settingsInput)
+UAzureOpenAICallCompletions* UAzureOpenAICallCompletions::AzureOpenAICallCompletions(EAOACompletionsEngineType engineInput, FString promptInput, FCompletionSettings settingsInput)
 {
 	UAzureOpenAICallCompletions* BPNode = NewObject<UAzureOpenAICallCompletions>();
 	BPNode->engine = engineInput;
@@ -46,7 +46,7 @@ void UAzureOpenAICallCompletions::Activate()
 	} else if (settings.bestOf < settings.numCompletions)
 	{
 		Finished.Broadcast({}, TEXT("bestOf must be greater than numCompletions"), {}, false);
-	} else if (settings.maxTokens <= 0 || ( engine != EOACompletionsEngineType::TEXT_DAVINCI_003 && settings.maxTokens >= 2048) || ( engine == EOACompletionsEngineType::TEXT_DAVINCI_003 && settings.maxTokens >= 4000))
+	} else if (settings.maxTokens <= 0 || ( engine != EAOACompletionsEngineType::TEXT_DAVINCI_003 && settings.maxTokens >= 2048) || ( engine == EAOACompletionsEngineType::TEXT_DAVINCI_003 && settings.maxTokens >= 4000))
 	{
 		Finished.Broadcast({}, TEXT("maxTokens must be within 0 and 2048. Up to 4096 if using davinci-3."), {}, false);
 	} else if (settings.stopSequences.Num() > 4)
@@ -62,31 +62,31 @@ void UAzureOpenAICallCompletions::Activate()
 	FString apiMethod;
 	switch (engine)
 	{
-	case EOACompletionsEngineType::DAVINCI:
+	case EAOACompletionsEngineType::DAVINCI:
 			apiMethod = "davinci";
 	break;
-	case EOACompletionsEngineType::CURIE:
+	case EAOACompletionsEngineType::CURIE:
 			apiMethod = "curie";
 	break;
-	case EOACompletionsEngineType::BABBAGE:
+	case EAOACompletionsEngineType::BABBAGE:
 			apiMethod = "babbage";
 	break;
-	case EOACompletionsEngineType::ADA:
+	case EAOACompletionsEngineType::ADA:
 			apiMethod = "ada";
 	break;
-	case EOACompletionsEngineType::TEXT_DAVINCI_002:
+	case EAOACompletionsEngineType::TEXT_DAVINCI_002:
 		apiMethod = "text-davinci-002";
 	break;
-	case EOACompletionsEngineType::TEXT_CURIE_001:
+	case EAOACompletionsEngineType::TEXT_CURIE_001:
 		apiMethod = "text-curie-001";
 	break;
-	case EOACompletionsEngineType::TEXT_BABBAGE_001:
+	case EAOACompletionsEngineType::TEXT_BABBAGE_001:
 		apiMethod = "text-babbage-001";
 		break;
-	case EOACompletionsEngineType::TEXT_ADA_001:
+	case EAOACompletionsEngineType::TEXT_ADA_001:
 		apiMethod = "text-ada-001";
 		break;
-	case EOACompletionsEngineType::TEXT_DAVINCI_003:
+	case EAOACompletionsEngineType::TEXT_DAVINCI_003:
 		apiMethod = "text-davinci-003";
 		break;
 	}

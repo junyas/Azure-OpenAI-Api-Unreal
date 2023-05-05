@@ -8,7 +8,7 @@
 
 
 UENUM(BlueprintType)
-enum class EOACompletionsEngineType : uint8
+enum class EAOACompletionsEngineType : uint8
 {
 	DAVINCI = 0 UMETA(ToolTip = "Davinci is the most capable engine and can perform any task the other models can perform and often with less instruction."),
 	CURIE = 1 UMETA(ToolTip = "Curie is extremely powerful, yet very fast. While Davinci is stronger when it comes to analyzing complicated text, Curie is quite capable for many nuanced tasks like sentiment classification and summarization. Curie is also quite good at answering questions and performing Q&A and as a general service chatbot."),
@@ -22,7 +22,7 @@ enum class EOACompletionsEngineType : uint8
 };
 
 UENUM(BlueprintType)
-enum class EOAChatEngineType : uint8
+enum class EAOAChatEngineType : uint8
 {
 	GPT_3_5_TURBO = 0 UMETA(ToolTip = "More capable than any GPT-3.5 model, able to do more complex tasks, and optimized for chat. Will be updated with our latest model iteration."),
 	GPT_4 = 1 UMETA(ToolTip = "More capable than any GPT-3.5 model, able to do more complex tasks, and optimized for chat. Will be updated with our latest model iteration."),
@@ -30,7 +30,7 @@ enum class EOAChatEngineType : uint8
 };
 
 UENUM(BlueprintType)
-enum class EOAChatRole : uint8
+enum class EAOAChatRole : uint8
 {
 	SYSTEM = 0 UMETA(ToolTip = "More capable than any GPT-3.5 model, able to do more complex tasks, and optimized for chat. Will be updated with our latest model iteration."),
 	USER= 1 UMETA(ToolTip = "More capable than any GPT-3.5 model, able to do more complex tasks, and optimized for chat. Will be updated with our latest model iteration."),
@@ -38,7 +38,7 @@ enum class EOAChatRole : uint8
 };
 
 UENUM(BlueprintType)
-enum class EOAImageSize : uint8
+enum class EAOAImageSize : uint8
 {
 	SMALL = 0 UMETA(ToolTip = "Generates 256x256 images. This settings takes the least amount of time to generate images."),
 	MEDIUM = 1 UMETA(ToolTip = "Generates 512x512 images. This setting takes a moderate amount of time to generate images."),
@@ -52,7 +52,7 @@ struct FChatLog
 {
 	GENERATED_USTRUCT_BODY()
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
-	EOAChatRole role = EOAChatRole::SYSTEM;
+	EAOAChatRole role = EAOAChatRole::SYSTEM;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	FString content = "";
@@ -113,8 +113,8 @@ class AzureOpenAIValueMapping
 public:
 	AzureOpenAIValueMapping();
 	
-	TMap<EOACompletionsEngineType, FString> engineTypes;
-	TMap<EOAImageSize, FString> imageSizes;
+	TMap<EAOACompletionsEngineType, FString> engineTypes;
+	TMap<EAOAImageSize, FString> imageSizes;
 };
 
 USTRUCT(BlueprintType)
@@ -178,7 +178,7 @@ struct FChatSettings
 	GENERATED_USTRUCT_BODY();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
-	EOAChatEngineType model = EOAChatEngineType::GPT_4;
+	EAOAChatEngineType model = EAOAChatEngineType::GPT_4;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AzureOpenAI")
 	TArray<FChatLog> messages;

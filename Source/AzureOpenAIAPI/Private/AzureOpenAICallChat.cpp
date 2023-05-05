@@ -43,13 +43,13 @@ void UAzureOpenAICallChat::Activate()
 		FString apiMethod;
 		switch (chatSettings.model)
 		{
-		case EOAChatEngineType::GPT_3_5_TURBO:
+		case EAOAChatEngineType::GPT_3_5_TURBO:
 			apiMethod = "gpt-3.5-turbo";
 			break;
-		case EOAChatEngineType::GPT_4:
+		case EAOAChatEngineType::GPT_4:
 			apiMethod = "gpt-4";
 			break;
-		case EOAChatEngineType::GPT_4_32k:
+		case EAOAChatEngineType::GPT_4_32k:
 			apiMethod = "gpt-4-32k";
 			break;
 		}
@@ -84,13 +84,13 @@ void UAzureOpenAICallChat::Activate()
 				TSharedPtr<FJsonObject> Message = MakeShareable(new FJsonObject());
 				switch (chatSettings.messages[i].role)
 				{
-				case EOAChatRole::USER:
+				case EAOAChatRole::USER:
 					role = "user";
 					break;
-				case EOAChatRole::ASSISTANT:
+				case EAOAChatRole::ASSISTANT:
 					role = "assistant";
 					break;
-				case EOAChatRole::SYSTEM:
+				case EAOAChatRole::SYSTEM:
 					role = "system";
 					break;
 				}

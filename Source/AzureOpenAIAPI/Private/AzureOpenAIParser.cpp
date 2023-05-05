@@ -52,7 +52,7 @@ FChatCompletion AzureOpenAIParser::ParseChatCompletion(const FJsonObject& json)
 	FChatCompletion res = {};
 
 	FChatLog message;
-	message.role = EOAChatRole::ASSISTANT;
+	message.role = EAOAChatRole::ASSISTANT;
 	TArray<TSharedPtr<FJsonValue>> choices = json.GetArrayField("choices");
 	TSharedPtr<FJsonValue> choice = choices[0];
 	TSharedPtr<FJsonObject> messageObject = choice->AsObject()->GetObjectField("message");

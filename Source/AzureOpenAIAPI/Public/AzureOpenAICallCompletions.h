@@ -22,7 +22,7 @@ public:
 	UAzureOpenAICallCompletions();
 	~UAzureOpenAICallCompletions();
 
-	EOACompletionsEngineType engine = EOACompletionsEngineType::TEXT_DAVINCI_002;
+	EAOACompletionsEngineType engine = EAOACompletionsEngineType::TEXT_DAVINCI_002;
 	FString prompt = "";
 	FCompletionSettings settings;
 
@@ -33,7 +33,7 @@ private:
 	AzureOpenAIValueMapping mapping;
 
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "AzureOpenAI")
-		static UAzureOpenAICallCompletions* AzureOpenAICallCompletions(EOACompletionsEngineType engine, FString prompt, FCompletionSettings settings);
+		static UAzureOpenAICallCompletions* AzureOpenAICallCompletions(EAOACompletionsEngineType engine, FString prompt, FCompletionSettings settings);
 
 	virtual void Activate() override;
 	void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful);

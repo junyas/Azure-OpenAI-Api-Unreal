@@ -14,6 +14,9 @@ public:
 	virtual void ShutdownModule() override;
 
 private:
+	FString _apiEndpoint = "";
+	FString _apiVersion = "";
 	FString _apiKey = "";
+	/** use API Key true:from Environment Variable or false:defined in Blueprint */
 	bool _useApiKeyFromEnvVariable = false;
 };

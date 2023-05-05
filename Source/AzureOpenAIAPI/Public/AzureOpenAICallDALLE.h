@@ -22,7 +22,7 @@ public:
 	UAzureOpenAICallDALLE();
 	~UAzureOpenAICallDALLE();
 
-	EOAImageSize imageSize = EOAImageSize::LARGE;
+	EAOAImageSize imageSize = EAOAImageSize::LARGE;
 	FString prompt = "";
 	int32 numImages = 1;
 	FCompletionSettings settings;
@@ -34,7 +34,7 @@ private:
 	AzureOpenAIValueMapping mapping;
 
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "AzureOpenAI")
-		static UAzureOpenAICallDALLE* AzureOpenAICallDALLE(EOAImageSize imageSize, FString prompt, int32 numImages);
+		static UAzureOpenAICallDALLE* AzureOpenAICallDALLE(EAOAImageSize imageSize, FString prompt, int32 numImages);
 
 	virtual void Activate() override;
 	void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool WasSuccessful);

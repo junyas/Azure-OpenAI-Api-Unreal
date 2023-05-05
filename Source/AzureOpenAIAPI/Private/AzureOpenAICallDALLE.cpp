@@ -18,7 +18,7 @@ UAzureOpenAICallDALLE::~UAzureOpenAICallDALLE()
 {
 }
 
-UAzureOpenAICallDALLE* UAzureOpenAICallDALLE::AzureOpenAICallDALLE(EOAImageSize imageSizeInput, FString promptInput, int32 numImagesInput)
+UAzureOpenAICallDALLE* UAzureOpenAICallDALLE::AzureOpenAICallDALLE(EAOAImageSize imageSizeInput, FString promptInput, int32 numImagesInput)
 {
 	UAzureOpenAICallDALLE* BPNode = NewObject<UAzureOpenAICallDALLE>();
 	BPNode->imageSize = imageSizeInput;
@@ -53,13 +53,13 @@ void UAzureOpenAICallDALLE::Activate()
 	FString imageResolution;
 	switch (imageSize)
 	{
-	case EOAImageSize::SMALL:
+	case EAOAImageSize::SMALL:
 			imageResolution = "256x256";
 	break;
-	case EOAImageSize::MEDIUM:
+	case EAOAImageSize::MEDIUM:
 			imageResolution = "512x512";
 	break;
-	case EOAImageSize::LARGE:
+	case EAOAImageSize::LARGE:
 			imageResolution = "1024x1024";
 	break;
 	}
