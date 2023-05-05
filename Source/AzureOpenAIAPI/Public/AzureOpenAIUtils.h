@@ -35,6 +35,10 @@ class AZUREOPENAIAPI_API UAzureOpenAIUtils : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
+	static void setUseAzureOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable);
+	static bool getUseApiKeyFromEnvironmentVars();
+
+	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
 	static void setAzureOpenAIApiEndpoint(FString apiEndpoint);
 	static FString getAzureOpenAIApiEndpoint();
 
@@ -42,17 +46,13 @@ public:
 	static void setAzureOpenAIApiDeploymentName(FString apiDeploymentName);
 	static FString getAzureOpenAIApiDeploymentName();
 
-	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
-	static void setAzureOpenAIApiVersion(FString apiVersion);
-	static FString getAzureOpenAIApiVersion();
+	UFUNCTION(BlueprintCallable, Category = "AzureCognitiveServices")
+	static void setAzureCognitiveServicesApiVersion(FString apiVersion);
+	static FString getAzureCognitiveServicesApiVersion();
 
-	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
-	static void setAzureOpenAIApiKey(FString apiKey);
-	static FString getAzureOpenAIApiKey();
-
-	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
-	static void setUseAzureOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable);
-	static bool getUseApiKeyFromEnvironmentVars();
+	UFUNCTION(BlueprintCallable, Category = "AzureCognitiveServices")
+	static void setAzureCognitiveServicesApiKey(FString apiKey);
+	static FString getAzureCognitiveServicesApiKey();
 
 	static FString GetEnvironmentVariable(FString key);
 	
