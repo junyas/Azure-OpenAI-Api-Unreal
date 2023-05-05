@@ -30,9 +30,9 @@ void UAzureOpenAICallTranscriptions::Activate()
 {
 	FString _apiKey;
 	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
-		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_KEY"));
+		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZURECOGNITIVESERVICES_API_KEY"));
 	else
-		_apiKey = UAzureOpenAIUtils::getAzureOpenAIApiKey();
+		_apiKey = UAzureOpenAIUtils::getAzureCognitiveServicesApiKey();
 	
 	// checking parameters are valid
 	if (_apiKey.IsEmpty())
@@ -44,44 +44,28 @@ void UAzureOpenAICallTranscriptions::Activate()
 	FString relativePath = FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() + "BouncedWavFiles/" + fileName);
 	FString absolutePath = FPaths::ConvertRelativePathToFull(relativePath);
 	
-	FString tempHeader = "Bearer ";
-	tempHeader += _apiKey;
+	//FString tempHeader = "Bearer ";
+	//tempHeader += _apiKey;
 	
 	// Create the HTTP request
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
 
 	// Set the request method, URL, and headers
-
-	HttpRequest->SetURL("https://api.openai.com/v1/audio/transcriptions");
+	FString url;
+	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
+		url = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZURECOGNITIVESERVICES_API_ENDPOINT"));
+	else
+		url = UAzureOpenAIUtils::getAzureCognitiveServicesApiEndpoint();
+	HttpRequest->SetURL(url);
 	HttpRequest->SetVerb("POST");
 	
 	// Set the content type, boundary, and form data
-	HttpRequest->SetHeader("Authorization", tempHeader);
-	HttpRequest->SetHeader("Content-Type", "multipart/form-data; boundary=boundary");
-	HttpRequest->SetHeader("model", "whisper-1");
+	HttpRequest->SetHeader("Ocp-Apim-Subscription-Key", _apiKey);
+	HttpRequest->SetHeader("Content-Type", "audio/wav");
 	
 	TArray<uint8> UpFileRawData;
 	FFileHelper::LoadFileToArray(UpFileRawData, *absolutePath);
-	
-	FString boundaryStart = "\r\n--boundary\r\n";
-	FString contentDispositionFile = FString::Printf(TEXT("Content-Disposition: form-data; name=\"file\"; filename=\"%s\"\r\n"), *fileName);
-	FString contentType = "Content-Type: audio/wav\r\n\r\n";
-	FString boundaryMiddle = "\r\n--boundary\r\n";
-	FString contentDisposition = "Content-Disposition: form-data; name=\"model\"\r\n\r\n";
-	FString transcriptionModel = "whisper-1";
-	FString boundaryEnd = "\r\n--boundary--\r\n";
-
-	TArray<uint8> data;
-	data.Append((uint8*)TCHAR_TO_UTF8(*boundaryStart), boundaryStart.Len());
-	data.Append((uint8*)TCHAR_TO_UTF8(*contentDispositionFile), contentDispositionFile.Len());
-	data.Append((uint8*)TCHAR_TO_UTF8(*contentType), contentType.Len());
-	data.Append(UpFileRawData);
-	data.Append((uint8*)TCHAR_TO_UTF8(*boundaryMiddle), boundaryMiddle.Len());
-	data.Append((uint8*)TCHAR_TO_UTF8(*contentDisposition), contentDisposition.Len());
-	data.Append((uint8*)TCHAR_TO_UTF8(*transcriptionModel), transcriptionModel.Len());
-	data.Append((uint8*)TCHAR_TO_UTF8(*boundaryEnd), boundaryEnd.Len());
-
-	HttpRequest->SetContent(data); 
+	HttpRequest->SetContent(UpFileRawData); 
 
 	HttpRequest->OnProcessRequestComplete().BindUObject(this, &UAzureOpenAICallTranscriptions::OnResponse);
 	
@@ -106,13 +90,13 @@ void UAzureOpenAICallTranscriptions::OnResponse(FHttpRequestPtr Request, FHttpRe
 	if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
 	{
 		FString TextValue;
-		if (JsonObject->TryGetStringField("text", TextValue))
+		if (JsonObject->TryGetStringField("DisplayText", TextValue))
 		{
-			UE_LOG(LogTemp, Log, TEXT("Extracted text: %s"), *TextValue);
+			UE_LOG(LogTemp, Log, TEXT("Extracted DisplayText: %s"), *TextValue);
 		}
 		else
 		{
-			Finished.Broadcast("", "Failed to get 'text' field from JSON response", false);
+			Finished.Broadcast("", "Failed to get 'DisplayText' field from JSON response", false);
 		}
 
 		Finished.Broadcast(TextValue, "", true);

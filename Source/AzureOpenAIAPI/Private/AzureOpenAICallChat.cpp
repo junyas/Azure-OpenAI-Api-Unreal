@@ -57,8 +57,8 @@ void UAzureOpenAICallChat::Activate()
 		//TODO: add aditional params to match the ones listed in the curl response in: https://platform.openai.com/docs/api-reference/making-requests
 	
 		// convert parameters to strings
-		FString tempHeader = "Bearer ";
-		tempHeader += _apiKey;
+		//FString tempHeader = "Bearer ";
+		//tempHeader += _apiKey;
 
 		// set headers
 		// original FString url = FString::Printf(TEXT("https://api.openai.com/v1/chat/completions"));
