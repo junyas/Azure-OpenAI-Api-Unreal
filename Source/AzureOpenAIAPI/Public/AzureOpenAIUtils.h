@@ -46,9 +46,17 @@ public:
 	static void setAzureOpenAIApiDeploymentName(FString apiDeploymentName);
 	static FString getAzureOpenAIApiDeploymentName();
 
+	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
+	static void setAzureOpenAIApiVersion(FString apiVersion);
+	static FString getAzureOpenAIApiVersion();
+
+	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
+	static void setAzureOpenAIApiKey(FString apiKey);
+	static FString getAzureOpenAIApiKey();
+
 	UFUNCTION(BlueprintCallable, Category = "AzureCognitiveServices")
-	static void setAzureCognitiveServicesApiVersion(FString apiVersion);
-	static FString getAzureCognitiveServicesApiVersion();
+	static void setAzureCognitiveServicesApiEndpoint(FString apiEndpoint);
+	static FString getAzureCognitiveServicesApiEndpoint();
 
 	UFUNCTION(BlueprintCallable, Category = "AzureCognitiveServices")
 	static void setAzureCognitiveServicesApiKey(FString apiKey);
