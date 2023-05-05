@@ -69,7 +69,7 @@ void UAzureOpenAICallChat::Activate()
 		else
 			url = UAzureOpenAIUtils::getApiEndpoint()+TEXT("openai/deployments/")+UAzureOpenAIUtils::getApiDeploymentName()+TEXT("chat/completions?")+UAzureOpenAIUtils::getApiVersion();
 
-		UE_LOG(LogTemp, Log, TEXT("URL:%s"), url);
+		UE_LOG(LogTemp, Log, TEXT("URL:%s"), *url);
 
 		HttpRequest->SetURL(url);
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
