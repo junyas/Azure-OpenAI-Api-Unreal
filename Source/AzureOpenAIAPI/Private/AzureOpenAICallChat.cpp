@@ -29,7 +29,7 @@ void UAzureOpenAICallChat::Activate()
 	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
 		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_KEY"));
 	else
-		_apiKey = UAzureOpenAIUtils::getApiKey();
+		_apiKey = UAzureOpenAIUtils::getAzureOpenAIApiKey();
 	
 	// checking parameters are valid
 	if (_apiKey.IsEmpty())
@@ -67,7 +67,7 @@ void UAzureOpenAICallChat::Activate()
 			//url = FString::Printf(TEXT("https://jushimod-openai-sandbox.openai.azure.com/openai/deployments/jushimodChatGPT/chat/completions?api-version=2023-03-15-preview"));
 			url = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_ENDPOINT"))+TEXT("openai/deployments/")+UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_DEPLOYMENTNAME"))+TEXT("/chat/completions?api-version=")+UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_VERSION"));
 		else
-			url = UAzureOpenAIUtils::getApiEndpoint()+TEXT("openai/deployments/")+UAzureOpenAIUtils::getApiDeploymentName()+TEXT("/chat/completions?api-version=")+UAzureOpenAIUtils::getApiVersion();
+			url = UAzureOpenAIUtils::getAzureOpenAIApiEndpoint()+TEXT("openai/deployments/")+UAzureOpenAIUtils::getAzureOpenAIApiDeploymentName()+TEXT("/chat/completions?api-version=")+UAzureOpenAIUtils::getAzureOpenAIApiVersion();
 
 		UE_LOG(LogTemp, Warning, TEXT("URL:%s"), *url);
 

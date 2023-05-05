@@ -36,19 +36,19 @@ class AZUREOPENAIAPI_API UAzureOpenAIUtils : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
 	static void setAzureOpenAIApiEndpoint(FString apiEndpoint);
-	static FString getApiEndpoint();
+	static FString getAzureOpenAIApiEndpoint();
 
 	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
 	static void setAzureOpenAIApiDeploymentName(FString apiDeploymentName);
-	static FString getApiDeploymentName();
+	static FString getAzureOpenAIApiDeploymentName();
 
 	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
 	static void setAzureOpenAIApiVersion(FString apiVersion);
-	static FString getApiVersion();
+	static FString getAzureOpenAIApiVersion();
 
 	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
 	static void setAzureOpenAIApiKey(FString apiKey);
-	static FString getApiKey();
+	static FString getAzureOpenAIApiKey();
 
 	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
 	static void setUseAzureOpenAIApiKeyFromEnvironmentVars(bool bUseEnvVariable);

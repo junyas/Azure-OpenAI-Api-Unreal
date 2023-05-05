@@ -32,7 +32,7 @@ void UAzureOpenAICallTranscriptions::Activate()
 	if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
 		_apiKey = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_KEY"));
 	else
-		_apiKey = UAzureOpenAIUtils::getApiKey();
+		_apiKey = UAzureOpenAIUtils::getAzureOpenAIApiKey();
 	
 	// checking parameters are valid
 	if (_apiKey.IsEmpty())
