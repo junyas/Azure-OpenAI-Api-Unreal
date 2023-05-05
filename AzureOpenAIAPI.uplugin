@@ -2,6 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
+	"IsBetaVersion": true,
 	"FriendlyName": "AzureOpenAIAPI",
 	"Description": "Provides easy access to Azure OpenAI's API that forked from https://github.com/KellanM/OpenAI-Api-Unreal",
 	"Category": "Other",
