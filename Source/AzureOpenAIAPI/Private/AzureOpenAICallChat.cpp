@@ -73,7 +73,7 @@ void UAzureOpenAICallChat::Activate()
 
 		HttpRequest->SetURL(url);
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-		HttpRequest->SetHeader(TEXT("Authorization"), tempHeader);
+		HttpRequest->SetHeader(TEXT("api-key"), /*tempHeader*/_apiKey);
 
 		//build payload
 		TSharedPtr<FJsonObject> _payloadObject = MakeShareable(new FJsonObject());
