@@ -39,6 +39,10 @@ public:
 	static FString getApiEndpoint();
 
 	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
+	static void setAzureOpenAIApiDeploymentName(FString apiDeploymentName);
+	static FString getApiDeploymentName();
+
+	UFUNCTION(BlueprintCallable, Category = "AzureOpenAI")
 	static void setAzureOpenAIApiVersion(FString apiVersion);
 	static FString getApiVersion();
 

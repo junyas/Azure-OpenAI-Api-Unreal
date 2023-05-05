@@ -18,6 +18,18 @@ FString UAzureOpenAIUtils::getApiEndpoint()
 	return mod._apiEndpoint;
 }
 
+void UAzureOpenAIUtils::setAzureOpenAIApiDeploymentName(FString apiDeploymentName)
+{
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
+	mod._apiDeploymentName = apiDeploymentName;
+}
+
+FString UAzureOpenAIUtils::getApiDeploymentName()
+{
+	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
+	return mod._apiDeploymentName;
+}
+
 void UAzureOpenAIUtils::setAzureOpenAIApiVersion(FString apiVersion)
 {
 	FAzureOpenAIAPIModule& mod = FModuleManager::Get().LoadModuleChecked<FAzureOpenAIAPIModule>("AzureOpenAIAPI");
