@@ -62,8 +62,13 @@ void UAzureOpenAICallChat::Activate()
 
 		// set headers
 		// original FString url = FString::Printf(TEXT("https://api.openai.com/v1/chat/completions"));
-		FString url = FString::Printf(TEXT("https://jushimod-openai-sandbox.openai.azure.com/openai/deployments/jushimodChatGPT/chat/completions?api-version=2023-03-15-preview"));
-		
+		FString url;
+		if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
+			//url = FString::Printf(TEXT("https://jushimod-openai-sandbox.openai.azure.com/openai/deployments/jushimodChatGPT/chat/completions?api-version=2023-03-15-preview"));
+			url = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_ENDPOINT"))+TEXT("openai/deployments/")+UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_DEPLOYMENTNAME"))+TEXT("chat/completions?")+UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_VERSION"));
+		else
+			url = UAzureOpenAIUtils::getApiEndpoint()+TEXT("openai/deployments/")+UAzureOpenAIUtils::getApiDeploymentName()+TEXT("chat/completions?")+UAzureOpenAIUtils::getApiVersion();
+
 		HttpRequest->SetURL(url);
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 		HttpRequest->SetHeader(TEXT("Authorization"), tempHeader);
