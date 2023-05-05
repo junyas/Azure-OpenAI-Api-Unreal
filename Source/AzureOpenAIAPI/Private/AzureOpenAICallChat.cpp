@@ -56,31 +56,23 @@ void UAzureOpenAICallChat::Activate()
 		
 		//TODO: add aditional params to match the ones listed in the curl response in: https://platform.openai.com/docs/api-reference/making-requests
 	
-		// convert parameters to strings
-		//FString tempHeader = "Bearer ";
-		//tempHeader += _apiKey;
-
 		// set headers
 		// original FString url = FString::Printf(TEXT("https://api.openai.com/v1/chat/completions"));
 		FString url;
 		if (UAzureOpenAIUtils::getUseApiKeyFromEnvironmentVars())
-			//url = FString::Printf(TEXT("https://jushimod-openai-sandbox.openai.azure.com/openai/deployments/jushimodChatGPT/chat/completions?api-version=2023-03-15-preview"));
 			url = UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_ENDPOINT"))+TEXT("openai/deployments/")+UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_DEPLOYMENTNAME"))+TEXT("/chat/completions?api-version=")+UAzureOpenAIUtils::GetEnvironmentVariable(TEXT("AZUREOPENAI_API_VERSION"));
 		else
 			url = UAzureOpenAIUtils::getAzureOpenAIApiEndpoint()+TEXT("openai/deployments/")+UAzureOpenAIUtils::getAzureOpenAIApiDeploymentName()+TEXT("/chat/completions?api-version=")+UAzureOpenAIUtils::getAzureOpenAIApiVersion();
 
-		UE_LOG(LogTemp, Warning, TEXT("URL:%s"), *url);
-
 		HttpRequest->SetURL(url);
 		HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-		HttpRequest->SetHeader(TEXT("api-key"), /*tempHeader*/_apiKey);
+		HttpRequest->SetHeader(TEXT("api-key"), _apiKey);
 
 		//build payload
 		TSharedPtr<FJsonObject> _payloadObject = MakeShareable(new FJsonObject());
 		_payloadObject->SetStringField(TEXT("model"), apiMethod);
 		_payloadObject->SetNumberField(TEXT("max_tokens"), chatSettings.maxTokens);
 
-		
 		// convert role enum to model string
 		if (!(chatSettings.messages.Num() == 0))
 		{

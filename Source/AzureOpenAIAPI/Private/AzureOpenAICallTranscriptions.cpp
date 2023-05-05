@@ -87,7 +87,7 @@ void UAzureOpenAICallTranscriptions::OnResponse(FHttpRequestPtr Request, FHttpRe
 	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject());
 	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 
-	UE_LOG(LogTemp, Warning, TEXT("Response:\n%s"), *Response->GetContentAsString());
+	UE_LOG(LogTemp, Warning, TEXT("URL:%s\nResponse:\n%s"), *Response->GetURL(), *Response->GetContentAsString());
 
 	if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
 	{
